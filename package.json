@@ -1,0 +1,54 @@
+{
+  "name": "freestyle-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FreeStyle UI component library monorepo (core + React + Vue).",
+  "license": "MIT",
+  "scripts": {
+    "build": "pnpm -r run build",
+    "clean": "pnpm -r run clean",
+    "lint": "pnpm -r run lint && pnpm lint:spell",
+    "test": "pnpm -r run test",
+    "lint:spell": "cspell lint .",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,vue,json,md,scss,css,html}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,vue,json,md,scss,css,html}\""
+  },
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.8",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/react": "^18.2.73",
+    "@types/react-dom": "^18.2.23",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "@vitest/coverage-v8": "^1.6.0",
+    "autoprefixer": "^10.4.19",
+    "cspell": "^8.7.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-vue": "^9.26.0",
+    "postcss": "^8.4.38",
+    "prettier": "^3.3.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^5.0.10",
+    "rollup": "^4.21.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "sass": "^1.77.6",
+    "tslib": "^2.8.1",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.0",
+    "vitest": "^1.6.0",
+    "vue": "^3.5.0",
+    "vue-eslint-parser": "^9.4.3"
+  }
+}

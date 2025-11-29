@@ -1,0 +1,31 @@
+{
+  "name": "@freestyle/vue",
+  "version": "0.1.0",
+  "description": "Vue bindings for FreeStyle UI component library.",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs",
+    "clean": "rimraf dist",
+    "lint": "eslint \"src/**/*.{ts,tsx,vue}\"",
+    "test": "vitest"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@freestyle/core": "workspace:*"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "keywords": [
+    "ui",
+    "vue",
+    "components",
+    "freestyle"
+  ],
+  "license": "MIT"
+}

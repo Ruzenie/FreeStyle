@@ -1,0 +1,25 @@
+{
+  "name": "@freestyle/core",
+  "version": "0.1.0",
+  "description": "Framework-agnostic core utilities and styles for FreeStyle UI.",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs",
+    "clean": "rimraf dist",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "test": "vitest"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "ui",
+    "components",
+    "core",
+    "freestyle"
+  ],
+  "license": "MIT"
+}

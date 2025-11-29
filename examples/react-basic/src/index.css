@@ -1,0 +1,29 @@
+.fs-btn-custom-hover {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* 鼠标悬停时：抬起一点 + 阴影增强 */
+  .fs-btn-custom-hover:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 1);
+  }
+
+  /* 可选：用伪元素做一层高光动画 */
+  .fs-btn-custom-hover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.25),
+      rgba(255, 255, 255, 0)
+    );
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .fs-btn-custom-hover:hover::after {
+    opacity: 1;
+  }
