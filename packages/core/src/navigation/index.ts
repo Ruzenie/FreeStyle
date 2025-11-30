@@ -27,14 +27,19 @@ export function createNavBarStyles(
     paddingX = 16
   } = options;
 
+  const resolvedHeight =
+    typeof height === 'number' ? `${height}px` : height;
+  const resolvedPaddingX =
+    typeof paddingX === 'number' ? `${paddingX}px` : paddingX;
+
   const style: StyleObject = {
     boxSizing: 'border-box',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingLeft: paddingX,
-    paddingRight: paddingX,
-    height,
+    paddingLeft: resolvedPaddingX,
+    paddingRight: resolvedPaddingX,
+    height: resolvedHeight,
     backgroundColor
   };
 
@@ -54,9 +59,12 @@ export function createNavSideStyles(
     border = true
   } = options;
 
+  const resolvedWidth =
+    typeof width === 'number' ? `${width}px` : width;
+
   const style: StyleObject = {
     boxSizing: 'border-box',
-    width,
+    width: resolvedWidth,
     display: 'flex',
     flexDirection: 'column',
     backgroundColor
@@ -111,12 +119,15 @@ export function createMenuRootStyles(
 ): StyleObject {
   const { mode = 'vertical', gap = 16 } = options;
 
+  const resolvedGap =
+    typeof gap === 'number' ? `${gap}px` : gap;
+
   if (mode === 'horizontal') {
     return {
       boxSizing: 'border-box',
       display: 'flex',
       alignItems: 'center',
-      gap,
+      gap: resolvedGap,
       padding: 0,
       margin: 0,
       listStyle: 'none'
@@ -158,9 +169,8 @@ export function createMenuItemStyles(
   };
 
   if (mode === 'horizontal') {
-    style.borderRadius = 4;
+    style.borderRadius = '4px';
   }
 
   return style;
 }
-

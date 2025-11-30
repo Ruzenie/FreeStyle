@@ -60,6 +60,47 @@ export interface ButtonProps
 
 const ns = createNamespace('button');
 
+type LoadingSpinnerIconProps = {
+  size?: number;
+};
+
+// Simple inline SVG spinner (no external CSS needed).
+function LoadingSpinnerIcon(props: LoadingSpinnerIconProps) {
+  const size = props.size ?? 14;
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <g>
+        <circle
+          cx="12"
+          cy="12"
+          r="9"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          fill="none"
+          // Show a partial arc so rotation is visible.
+          strokeDasharray="56 34"
+          strokeDashoffset="10"
+        />
+        <animateTransform
+          attributeName="transform"
+          type="rotate"
+          from="0 12 12"
+          to="360 12 12"
+          dur="0.8s"
+          repeatCount="indefinite"
+        />
+      </g>
+    </svg>
+  );
+}
+
 export function FsButton(props: ButtonProps) {
   const {
     children,
@@ -126,6 +167,9 @@ export function FsButton(props: ButtonProps) {
   // Preserve any external handlers while tracking internal focus state.
   const { onFocus, onBlur, onMouseDown, onMouseUp, ...restProps } = rest;
 
+  const showLoader = !!loading;
+  const showIcon = !!icon && !showLoader;
+
   return (
     <button
       {...restProps}
@@ -173,7 +217,25 @@ export function FsButton(props: ButtonProps) {
         }
       }}
     >
-      {icon ? <i className={icon} style={{ marginRight: children ? 6 : 0 }} /> : null}
+      {showLoader ? (
+        <span
+          className={ns.bem('loader')}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginRight: children ? 6 : 0
+          }}
+        >
+          <LoadingSpinnerIcon size={14} />
+        </span>
+      ) : null}
+      {showIcon ? (
+        <i
+          className={icon}
+          style={{ marginRight: children ? 6 : 0 }}
+        />
+      ) : null}
       {children}
     </button>
   );

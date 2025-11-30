@@ -162,7 +162,12 @@ export function FsCollapseItem(props: CollapseItemProps) {
 
   const bodyStyle: CSSProperties = {
     padding: '10px 12px',
-    display: isActive ? 'block' : 'none'
+    overflow: 'hidden',
+    maxHeight: isActive ? '500px' : '0px',
+    opacity: isActive ? 1 : 0,
+    transform: isActive ? 'translateY(0px)' : 'translateY(-2px)',
+    transition:
+      'max-height 0.28s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s ease, transform 0.2s ease'
   };
 
   const mergedClassName = [ns.bem('item'), className].filter(Boolean).join(' ');
@@ -184,7 +189,19 @@ export function FsCollapseItem(props: CollapseItemProps) {
         onClick={handleClick}
       >
         <span>{title}</span>
-        <span>{isActive ? '−' : '+'}</span>
+        <span
+          style={{
+            display: 'inline-block',
+            marginLeft: 4,
+            width: 0,
+            height: 0,
+            borderTop: '4px solid transparent',
+            borderBottom: '4px solid transparent',
+            borderLeft: '6px solid currentColor',
+            transition: 'transform 0.2s ease',
+            transform: isActive ? 'rotate(90deg)' : 'rotate(0deg)'
+          }}
+        />
       </div>
       <div
         className={ns.bem('item-body')}

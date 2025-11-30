@@ -3,13 +3,18 @@ import ReactDOM from 'react-dom/client';
 import {
   FsAside,
   FsButton,
+  FsButtonGroup,
   FsContainer,
   FsFooter,
   FsHeader,
   FsMain,
   FsMenu,
   FsMenuItem,
-  FsSubMenu
+  FsSubMenu,
+  FsNavBar,
+  FsNavSide,
+  FsCollapse,
+  FsCollapseItem
 } from '@freestyle/react';
 import './index.css';
 
@@ -61,6 +66,8 @@ const demoMenuTree: MenuNode[] = [
 
 function App() {
   const [activeDemo, setActiveDemo] = useState<string>('basic-button');
+  const [navTopActive, setNavTopActive] = useState<string>('home');
+  const [navSideActive, setNavSideActive] = useState<string>('dashboard');
 
   return (
     <FsContainer
@@ -75,7 +82,7 @@ function App() {
     >
       <FsHeader
         height={56}
-        border
+        bordered
       >
         <h1 style={{ margin: 0 }}>FreeStyle React 示例</h1>
       </FsHeader>
@@ -90,7 +97,7 @@ function App() {
       >
         <FsAside
           width={220}
-          border
+          bordered
         >
           <h3 style={{ marginTop: 0, marginBottom: 8, fontSize: 14 }}>示例导航</h3>
           <FsMenu
@@ -199,7 +206,25 @@ function App() {
               </section>
 
               <section style={{ marginTop: 24 }}>
-                <h2>7. 聚焦</h2>
+                <h2>7. 按钮组（ButtonGroup）</h2>
+                <FsButtonGroup fsType="primary" style={{ marginBottom: 12 }} >
+                  <FsButton>左</FsButton>
+                  <FsButton>中</FsButton>
+                  <FsButton>右</FsButton>
+                </FsButtonGroup>
+                <FsButtonGroup style={{ marginLeft: 12 }} direction="vertical" fsType="success" size="small">
+                  <FsButton>上</FsButton>
+                  <FsButton>下</FsButton>
+                </FsButtonGroup>
+                <FsButtonGroup fsType="info" disabled style={{ marginTop: 12 ,marginLeft: 12}} >
+                  <FsButton>禁用 1</FsButton>
+                  <FsButton>禁用 2</FsButton>
+                  <FsButton>禁用 3</FsButton>
+                </FsButtonGroup>
+              </section>
+
+              <section style={{ marginTop: 24 }}>
+                <h2>8. 聚焦</h2>
                 <FsButton
                   fsType="danger"
                   autoFocus
@@ -209,7 +234,7 @@ function App() {
               </section>
 
               <section style={{ marginTop: 24 }}>
-                <h2>8. 禁用 & 自定义样式</h2>
+                <h2>9. 禁用 & 自定义样式</h2>
                 <FsButton fsType="primary" disabled style={{ marginRight: 8 }}>
                   禁用按钮
                 </FsButton>
@@ -220,7 +245,8 @@ function App() {
                     background: 'linear-gradient(90deg, #ff7e5f, #feb47b)',
                     border: 'none',
                     color: '#fff',
-                    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.25)'
+                    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.25)',
+                    borderRadius: '8px',
                   }}
                 >
                   自定义样式按钮
@@ -232,14 +258,148 @@ function App() {
           {activeDemo === 'basic-container' && (
             <section style={{ marginTop: 16 }}>
               <h2>Container 布局示例</h2>
-              <p>当前页面即是使用 FsContainer / FsHeader / FsAside / FsMain / FsFooter 的布局示例。</p>
+              <p>使用 FsContainer / FsHeader / FsAside / FsMain / FsFooter 构建基础布局。</p>
+              <div
+                style={{
+                  border: '1px solid #ebeef5',
+                  borderRadius: 4,
+                  overflow: 'hidden',
+                  marginTop: 12
+                }}
+              >
+                <FsContainer
+                  fullWidth={false}
+                  maxWidth={800}
+                  paddingX={0}
+                  paddingY={0}
+                  fsStyle={{ minHeight: 220 }}
+                >
+                  <FsHeader
+                    height={40}
+                    bordered
+                    fsStyle={{ backgroundColor: '#f5f7fa' }}
+                  >
+                    Header
+                  </FsHeader>
+                  <div style={{ display: 'flex', minHeight: 140 }}>
+                    <FsAside
+                      width={160}
+                      bordered
+                      fsStyle={{ backgroundColor: '#fafafa', padding: 12 }}
+                    >
+                      Aside
+                    </FsAside>
+                    <FsMain fsStyle={{ padding: 12 }}>
+                      Main 内容区域，可以放表格、卡片等内容。
+                    </FsMain>
+                  </div>
+                  <FsFooter
+                    height={32}
+                    bordered
+                    fsStyle={{ backgroundColor: '#f5f7fa' }}
+                  >
+                    Footer
+                  </FsFooter>
+                </FsContainer>
+              </div>
             </section>
           )}
 
-          {(activeDemo === 'navigation-menu' || activeDemo === 'navigation-collapse') && (
+          {activeDemo === 'navigation-menu' && (
             <section style={{ marginTop: 16 }}>
-              <h2>导航组件示例</h2>
-              <p>导航组件（菜单 / 折叠面板）在侧边栏和其它示例中使用，这里预留更详细的演示位置。</p>
+              <h2>导航菜单示例</h2>
+              <p>使用 FsNavBar / FsNavSide / FsMenu 构建顶部 + 侧边导航。</p>
+              <div
+                style={{
+                  border: '1px solid #ebeef5',
+                  borderRadius: 4,
+                  overflow: 'hidden',
+                  marginTop: 12
+                }}
+              >
+                <FsNavBar
+                  height={40}
+                  fsStyle={{ paddingLeft: 16, paddingRight: 16 }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      width: '100%'
+                    }}
+                  >
+                    <span>Brand</span>
+                    <FsMenu
+                      mode="horizontal"
+                      activeKey={navTopActive}
+                      onSelect={(key) => setNavTopActive(key)}
+                    >
+                      <FsMenuItem itemKey="home">首页</FsMenuItem>
+                      <FsMenuItem itemKey="docs">文档</FsMenuItem>
+                      <FsMenuItem itemKey="about">关于</FsMenuItem>
+                    </FsMenu>
+                  </div>
+                </FsNavBar>
+                <div style={{ display: 'flex', minHeight: 140 }}>
+                  <FsNavSide width={160}>
+                    <FsMenu
+                      mode="vertical"
+                      activeKey={navSideActive}
+                      onSelect={(key) => setNavSideActive(key)}
+                    >
+                      <FsMenuItem itemKey="dashboard">
+                        Dashboard
+                      </FsMenuItem>
+                      <FsSubMenu
+                        itemKey="user"
+                        title="用户"
+                      >
+                        <FsMenuItem itemKey="user-list">
+                          用户列表
+                        </FsMenuItem>
+                        <FsMenuItem itemKey="user-role">
+                          角色管理
+                        </FsMenuItem>
+                      </FsSubMenu>
+                    </FsMenu>
+                  </FsNavSide>
+                  <FsMain fsStyle={{ padding: 16 }}>
+                    主内容区域，可根据菜单切换不同页面内容。
+                  </FsMain>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {activeDemo === 'navigation-collapse' && (
+            <section style={{ marginTop: 16 }}>
+              <h2>折叠面板示例</h2>
+              <p>使用 FsCollapse / FsCollapseItem 展示可展开/收起的内容块。</p>
+              <FsCollapse
+                defaultActiveKeys={['panel-1']}
+                style={{ marginTop: 12 }}
+              >
+                <FsCollapseItem
+                  itemKey="panel-1"
+                  title="面板一"
+                >
+                  面板一的内容区域，可以放入任意组件。
+                </FsCollapseItem>
+                <FsCollapseItem
+                  itemKey="panel-2"
+                  title="面板二"
+                >
+                  面板二的内容区域。
+                </FsCollapseItem>
+                <FsCollapseItem
+                  itemKey="panel-3"
+                  title="面板三（禁用）"
+                  disabled
+                >
+                  这是一个禁用的面板。
+                </FsCollapseItem>
+              </FsCollapse>
             </section>
           )}
         </FsMain>
@@ -247,7 +407,7 @@ function App() {
 
       <FsFooter
         height={40}
-        border
+        bordered
         style={{ marginTop: 24 }}
       >
         页脚区域

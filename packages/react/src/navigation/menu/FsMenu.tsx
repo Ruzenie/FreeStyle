@@ -208,7 +208,13 @@ export function FsSubMenu(props: SubMenuProps) {
   };
 
   const bodyStyle: CSSProperties = {
-    display: open ? 'block' : 'none',
+    // Expand/collapse with a smoother transition.
+    overflow: 'hidden',
+    maxHeight: open ? '500px' : '0px',
+    opacity: open ? 1 : 0,
+    transform: open ? 'translateY(0px)' : 'translateY(-2px)',
+    transition:
+      'max-height 0.28s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s ease, transform 0.2s ease',
     paddingLeft: ctx?.mode === 'vertical' ? 12 : 0
   };
 
@@ -230,7 +236,19 @@ export function FsSubMenu(props: SubMenuProps) {
         onClick={toggleOpen}
       >
         <span>{title}</span>
-        <span>{open ? '▾' : '▸'}</span>
+        <span
+          style={{
+            display: 'inline-block',
+            marginLeft: 4,
+            width: 0,
+            height: 0,
+            borderTop: '4px solid transparent',
+            borderBottom: '4px solid transparent',
+            borderLeft: '6px solid currentColor',
+            transition: 'transform 0.2s ease',
+            transform: open ? 'rotate(90deg)' : 'rotate(0deg)'
+          }}
+        />
       </div>
       <div
         className={ns.bem('submenu-body')}

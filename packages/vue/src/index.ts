@@ -1,5 +1,6 @@
 // Vue package entry – re-export basic components (components only, not per-file install)
 export { FsButton } from './basic/button/FsButton';
+export { FsButtonGroup } from './basic/button/FsButtonGroup';
 
 export { FsContainer } from './basic/container/FsContainer';
 export { FsHeader } from './basic/container/FsHeader';

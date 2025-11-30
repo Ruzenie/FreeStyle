@@ -13,7 +13,14 @@ export interface AsideProps extends HTMLAttributes<HTMLElement> {
   width?: number | string;
   paddingX?: number | string;
   paddingY?: number | string;
+  /**
+   * @deprecated Use `bordered` instead to avoid clashing with native HTML `border`.
+   */
   border?: boolean;
+  /**
+   * Whether to show a 1px right border.
+   */
+  bordered?: boolean;
   backgroundColor?: string;
   fsStyle?: CSSProperties;
 }
@@ -26,6 +33,7 @@ export function FsAside(props: AsideProps) {
     width,
     paddingX,
     paddingY,
+    bordered,
     border,
     backgroundColor,
     fsStyle,
@@ -34,11 +42,13 @@ export function FsAside(props: AsideProps) {
     ...rest
   } = props;
 
+  const showBorder = bordered ?? border;
+
   const baseStyle = createAsideStyles({
     width,
     paddingX,
     paddingY,
-    border,
+    border: showBorder,
     backgroundColor
   });
 
@@ -60,4 +70,3 @@ export function FsAside(props: AsideProps) {
     </aside>
   );
 }
-

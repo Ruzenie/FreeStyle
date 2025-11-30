@@ -13,7 +13,14 @@ export interface FooterProps extends HTMLAttributes<HTMLElement> {
   height?: number | string;
   paddingX?: number | string;
   paddingY?: number | string;
+  /**
+   * @deprecated Use `bordered` instead to avoid clashing with native HTML `border`.
+   */
   border?: boolean;
+  /**
+   * Whether to show a 1px top border.
+   */
+  bordered?: boolean;
   backgroundColor?: string;
   fsStyle?: CSSProperties;
 }
@@ -26,6 +33,7 @@ export function FsFooter(props: FooterProps) {
     height,
     paddingX,
     paddingY,
+    bordered,
     border,
     backgroundColor,
     fsStyle,
@@ -34,11 +42,13 @@ export function FsFooter(props: FooterProps) {
     ...rest
   } = props;
 
+  const showBorder = bordered ?? border;
+
   const baseStyle = createFooterStyles({
     height,
     paddingX,
     paddingY,
-    border,
+    border: showBorder,
     backgroundColor
   });
 
@@ -60,4 +70,3 @@ export function FsFooter(props: FooterProps) {
     </footer>
   );
 }
-

@@ -58,7 +58,8 @@ export function createContainerStyles(
   };
 
   if (!fullWidth) {
-    style.maxWidth = typeof maxWidth === 'number' ? maxWidth : maxWidth;
+    style.maxWidth =
+      typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth;
   } else {
     style.maxWidth = '100%';
   }
@@ -71,10 +72,15 @@ export function createContainerStyles(
     style.marginRight = 'auto';
   }
 
-  style.paddingLeft = paddingX;
-  style.paddingRight = paddingX;
-  style.paddingTop = paddingY;
-  style.paddingBottom = paddingY;
+  const resolvedPaddingX =
+    typeof paddingX === 'number' ? `${paddingX}px` : paddingX;
+  const resolvedPaddingY =
+    typeof paddingY === 'number' ? `${paddingY}px` : paddingY;
+
+  style.paddingLeft = resolvedPaddingX;
+  style.paddingRight = resolvedPaddingX;
+  style.paddingTop = resolvedPaddingY;
+  style.paddingBottom = resolvedPaddingY;
 
   return style;
 }
@@ -147,13 +153,20 @@ export function createHeaderStyles(
     backgroundColor = '#ffffff'
   } = options;
 
+  const resolvedHeight =
+    typeof height === 'number' ? `${height}px` : height;
+  const resolvedPaddingX =
+    typeof paddingX === 'number' ? `${paddingX}px` : paddingX;
+  const resolvedPaddingY =
+    typeof paddingY === 'number' ? `${paddingY}px` : paddingY;
+
   const style: StyleObject = {
     ...headerBase,
-    height,
-    paddingLeft: paddingX,
-    paddingRight: paddingX,
-    paddingTop: paddingY,
-    paddingBottom: paddingY,
+    height: resolvedHeight,
+    paddingLeft: resolvedPaddingX,
+    paddingRight: resolvedPaddingX,
+    paddingTop: resolvedPaddingY,
+    paddingBottom: resolvedPaddingY,
     backgroundColor
   };
 
@@ -175,13 +188,20 @@ export function createAsideStyles(
     backgroundColor = '#ffffff'
   } = options;
 
+  const resolvedWidth =
+    typeof width === 'number' ? `${width}px` : width;
+  const resolvedPaddingX =
+    typeof paddingX === 'number' ? `${paddingX}px` : paddingX;
+  const resolvedPaddingY =
+    typeof paddingY === 'number' ? `${paddingY}px` : paddingY;
+
   const style: StyleObject = {
     ...asideBase,
-    width,
-    paddingLeft: paddingX,
-    paddingRight: paddingX,
-    paddingTop: paddingY,
-    paddingBottom: paddingY,
+    width: resolvedWidth,
+    paddingLeft: resolvedPaddingX,
+    paddingRight: resolvedPaddingX,
+    paddingTop: resolvedPaddingY,
+    paddingBottom: resolvedPaddingY,
     backgroundColor
   };
 
@@ -201,12 +221,17 @@ export function createMainStyles(
     backgroundColor = '#ffffff'
   } = options;
 
+  const resolvedPaddingX =
+    typeof paddingX === 'number' ? `${paddingX}px` : paddingX;
+  const resolvedPaddingY =
+    typeof paddingY === 'number' ? `${paddingY}px` : paddingY;
+
   const style: StyleObject = {
     ...mainBase,
-    paddingLeft: paddingX,
-    paddingRight: paddingX,
-    paddingTop: paddingY,
-    paddingBottom: paddingY,
+    paddingLeft: resolvedPaddingX,
+    paddingRight: resolvedPaddingX,
+    paddingTop: resolvedPaddingY,
+    paddingBottom: resolvedPaddingY,
     backgroundColor
   };
 
@@ -224,13 +249,20 @@ export function createFooterStyles(
     backgroundColor = '#ffffff'
   } = options;
 
+  const resolvedHeight =
+    typeof height === 'number' ? `${height}px` : height;
+  const resolvedPaddingX =
+    typeof paddingX === 'number' ? `${paddingX}px` : paddingX;
+  const resolvedPaddingY =
+    typeof paddingY === 'number' ? `${paddingY}px` : paddingY;
+
   const style: StyleObject = {
     ...footerBase,
-    height,
-    paddingLeft: paddingX,
-    paddingRight: paddingX,
-    paddingTop: paddingY,
-    paddingBottom: paddingY,
+    height: resolvedHeight,
+    paddingLeft: resolvedPaddingX,
+    paddingRight: resolvedPaddingX,
+    paddingTop: resolvedPaddingY,
+    paddingBottom: resolvedPaddingY,
     backgroundColor
   };
 
@@ -240,4 +272,3 @@ export function createFooterStyles(
 
   return style;
 }
-

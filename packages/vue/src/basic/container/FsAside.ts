@@ -23,7 +23,13 @@ export const FsAside = defineComponent({
       type: [Number, String] as PropType<number | string>,
       default: undefined
     },
+    // Legacy prop name kept for backward compatibility.
     border: Boolean,
+    // Preferred prop to avoid clashing with native HTML `border` attribute.
+    bordered: {
+      type: Boolean,
+      default: undefined
+    },
     backgroundColor: {
       type: String,
       default: undefined
@@ -35,11 +41,14 @@ export const FsAside = defineComponent({
   },
   setup(props, { slots, attrs }) {
     return () => {
+      const showBorder =
+        props.bordered !== undefined ? props.bordered : props.border;
+
       const baseStyle = createAsideStyles({
         width: props.width,
         paddingX: props.paddingX,
         paddingY: props.paddingY,
-        border: props.border,
+        border: showBorder,
         backgroundColor: props.backgroundColor
       });
 

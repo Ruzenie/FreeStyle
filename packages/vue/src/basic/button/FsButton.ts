@@ -21,7 +21,7 @@ export const FsButton = defineComponent({
     },
     size: {
       type: String as PropType<ButtonSize>,
-      default: 'md'
+      default: 'medium'
     },
     color: {
       type: String,
@@ -63,7 +63,7 @@ export const FsButton = defineComponent({
         hovered: hovered.value,
         active: active.value,
         color: props.color,
-        backgroundColor: props.backgroundColor
+        backgroundColor: props.backgroundColor,
       });
 
       const { style: attrStyle, onFocus, onBlur, ...restAttrs } = attrs as {
@@ -94,6 +94,10 @@ export const FsButton = defineComponent({
             }
           : null)
       };
+
+      const hasDefaultSlot = !!slots.default;
+      const showLoader = !!props.loading;
+      const showIcon = !!props.icon && !showLoader;
 
       return h(
         'button',
@@ -140,13 +144,62 @@ export const FsButton = defineComponent({
           }
         },
         [
-          props.icon
+          showLoader
+            ? h(
+                'span',
+                {
+                  class: ns.bem('loader'),
+                  style: {
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginRight: hasDefaultSlot ? '6px' : 0
+                  }
+                },
+                [
+                  h(
+                    'svg',
+                    {
+                      width: 14,
+                      height: 14,
+                      viewBox: '0 0 24 24',
+                      'aria-hidden': 'true',
+                      focusable: 'false'
+                    },
+                    [
+                      h('g', null, [
+                        h('circle', {
+                          cx: 12,
+                          cy: 12,
+                          r: 9,
+                          stroke: 'currentColor',
+                          'stroke-width': 2,
+                          'stroke-linecap': 'round',
+                          fill: 'none',
+                          'stroke-dasharray': '56 34',
+                          'stroke-dashoffset': 10
+                        }),
+                        h('animateTransform', {
+                          attributeName: 'transform',
+                          type: 'rotate',
+                          from: '0 12 12',
+                          to: '360 12 12',
+                          dur: '0.8s',
+                          repeatCount: 'indefinite'
+                        })
+                      ])
+                    ]
+                  )
+                ]
+              )
+            : null,
+          showIcon
             ? h('i', {
                 class: props.icon,
-                style: { marginRight: slots.default ? '6px' : 0 }
+                style: { marginRight: hasDefaultSlot ? '6px' : 0 }
               })
             : null,
-          slots.default ? slots.default() : undefined
+          hasDefaultSlot ? slots.default?.() : undefined
         ]
       );
     };

@@ -1,5 +1,6 @@
 // React package entry – re-export basic components
 export * from './basic/button/FsButton';
+export * from './basic/button/FsButtonGroup';
 export * from './basic/container/FsContainer';
 export * from './basic/container/FsHeader';
 export * from './basic/container/FsAside';

@@ -34,10 +34,10 @@ const baseStyle: StyleObject = {
   alignItems: 'center',
   justifyContent: 'center',
   padding: '8px 16px',
-  borderRadius: 4,
-  borderWidth: 1,
+  borderRadius: '4px',
+  borderWidth: '1px',
   borderStyle: 'solid',
-  fontSize: 14,
+  fontSize: '14px',
   lineHeight: 1,
   cursor: 'pointer',
   userSelect: 'none',
@@ -58,19 +58,19 @@ const typeColors: Record<FsButtonType, { bg: string; border: string; text: strin
 const sizeStyles: Record<ButtonSize, StyleObject> = {
   large: {
     padding: '10px 20px',
-    fontSize: 18
+    fontSize: '18px'
   },
   medium: {
     padding: '9px 16px',
-    fontSize: 16
+    fontSize: '16px'
   },
   small: {
     padding: '6px 12px',
-    fontSize: 14
+    fontSize: '14px'
   },
   mini: {
     padding: '4px 10px',
-    fontSize: 12
+    fontSize: '12px'
   }
 };
 
@@ -78,7 +78,9 @@ const sizeStyles: Record<ButtonSize, StyleObject> = {
  * Compute the base inline styles for a button given its options.
  * Framework bindings (React/Vue) can merge additional framework-specific styles on top.
  */
-export function createButtonStyles(options: ButtonStyleOptions = {}): StyleObject {
+export function createButtonStyles(
+  options: ButtonStyleOptions = {}
+): StyleObject {
   const {
     size = 'medium',
     fsType = 'primary',
@@ -93,7 +95,18 @@ export function createButtonStyles(options: ButtonStyleOptions = {}): StyleObjec
     backgroundColor
   } = options;
 
-  const sizeStyle = sizeStyles[size];
+  // Runtime guard: if an invalid size string sneaks in (e.g. from
+  // an untyped template binding), fall back to "medium" so that
+  // layout and padding are always defined.
+  const resolvedSize: ButtonSize =
+    size === 'large' ||
+    size === 'medium' ||
+    size === 'small' ||
+    size === 'mini'
+      ? size
+      : 'medium';
+
+  const sizeStyle = sizeStyles[resolvedSize];
   const typeColor = typeColors[fsType];
 
   const style: StyleObject = {
@@ -122,18 +135,18 @@ export function createButtonStyles(options: ButtonStyleOptions = {}): StyleObjec
 
   // Shape modifiers.
   if (round) {
-    style.borderRadius = 20;
+    style.borderRadius = '20px';
   }
   if (circle) {
     style.borderRadius = '50%';
     // Enforce equal width/height so the shape is a true circle.
-    const circleSizeMap: Record<ButtonSize, number> = {
-      large: 40,
-      medium: 36,
-      small: 32,
-      mini: 28
+    const circleSizeMap: Record<ButtonSize, string> = {
+      large: '40px',
+      medium: '36px',
+      small: '32px',
+      mini: '28px'
     };
-    const d = circleSizeMap[size];
+    const d = circleSizeMap[resolvedSize];
     style.width = d;
     style.height = d;
     style.padding = 0;
@@ -162,6 +175,78 @@ export function createButtonStyles(options: ButtonStyleOptions = {}): StyleObjec
        style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.18)';
      }
    }
+
+  return style;
+}
+
+// ---------------------
+// Button group helpers
+// ---------------------
+
+export type ButtonGroupDirection = 'horizontal' | 'vertical';
+
+export type ButtonGroupAlign = 'left' | 'center' | 'right';
+
+export interface ButtonGroupStyleOptions {
+  /**
+   * Layout direction for grouped buttons.
+   */
+  direction?: ButtonGroupDirection;
+  /**
+   * Horizontal alignment when there is remaining space.
+   */
+  align?: ButtonGroupAlign;
+  /**
+   * Gap between buttons (CSS gap, px by default).
+   */
+  gap?: number | string;
+  /**
+   * When true, group stretches to full width.
+   */
+  fullWidth?: boolean;
+}
+
+const groupBaseStyle: StyleObject = {
+  display: 'inline-flex',
+  alignItems: 'center'
+};
+
+/**
+ * Compute inline styles for a button group container.
+ */
+export function createButtonGroupStyles(
+  options: ButtonGroupStyleOptions = {}
+): StyleObject {
+  const {
+    direction = 'horizontal',
+    align = 'left',
+    gap = 0,
+    fullWidth
+  } = options;
+
+  const style: StyleObject = {
+    ...groupBaseStyle
+  };
+
+  style.flexDirection = direction === 'horizontal' ? 'row' : 'column';
+
+  if (align === 'left') {
+    style.justifyContent = 'flex-start';
+  } else if (align === 'center') {
+    style.justifyContent = 'center';
+  } else {
+    style.justifyContent = 'flex-end';
+  }
+
+  // Normalize numeric gap to px so both React and Vue render the same spacing.
+  style.gap =
+    typeof gap === 'number'
+      ? `${gap}px`
+      : gap;
+
+  if (fullWidth) {
+    style.width = '100%';
+  }
 
   return style;
 }
