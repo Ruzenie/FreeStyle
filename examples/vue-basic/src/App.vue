@@ -13,7 +13,7 @@
       :height="56"
       bordered
     >
-      <h1 style="margin: 0;">FreeStyle Vue Button 示例</h1>
+      <h1 style="margin: 0;">FreeStyle Vue 示例</h1>
     </FsHeader>
 
     <div style="display: flex; margin-top: 16px; gap: 16px; flex: 1 1 auto;">

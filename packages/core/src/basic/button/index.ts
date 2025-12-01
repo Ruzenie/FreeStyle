@@ -158,7 +158,6 @@ export function createButtonStyles(
     style.opacity = 0.55;
     style.filter = 'grayscale(0.2)';
   } else if (loading) {
-    style.cursor = 'not-allowed';
     style.opacity = 0.7;
   }
 
