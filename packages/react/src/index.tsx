@@ -12,3 +12,5 @@ export * from './navigation/menu/FsNavBar';
 export * from './navigation/menu/FsNavSide';
 export * from './navigation/menu/FsCollapse';
 export * from './navigation/menu/FsMenu';
+// Icon components
+export * from './basic/icon/FsIcon';

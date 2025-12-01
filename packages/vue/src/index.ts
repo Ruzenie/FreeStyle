@@ -16,3 +16,5 @@ export { FsCollapseItem } from './navigation/menu/FsCollapseItem';
 export { FsMenu } from './navigation/menu/FsMenu';
 export { FsMenuItem } from './navigation/menu/FsMenuItem';
 export { FsSubMenu } from './navigation/menu/FsSubMenu';
+// Icon components
+export { FsIcon } from './basic/icon/FsIcon';

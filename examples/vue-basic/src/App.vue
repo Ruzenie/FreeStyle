@@ -33,6 +33,9 @@
             <FsMenuItem item-key="basic-button">
               button
             </FsMenuItem>
+            <FsMenuItem item-key="basic-icon">
+              icon
+            </FsMenuItem>
           </FsSubMenu>
           <FsSubMenu
             item-key="layout"
@@ -178,7 +181,59 @@
               初始聚焦
             </FsButton>
           </section>
+
         </div>
+
+        <section
+          v-if="activeDemo === 'basic-icon'"
+          style="margin-top: 16px;"
+        >
+          <h2>图标组件（FsIcon）</h2>
+          <p>使用 FsIcon 渲染不同分类下的线框图标。</p>
+          <section
+            v-for="group in iconGroups"
+            :key="group.key"
+            style="margin-top: 16px;"
+          >
+            <h3 style="margin-bottom: 8px;">
+              {{ group.title }}
+            </h3>
+            <div
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                gap: 16px;
+                margin-top: 4px;
+              "
+            >
+              <div
+                v-for="name in group.icons"
+                :key="name"
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  width: 80px;
+                "
+              >
+                <FsIcon
+                  :name="name"
+                  :size="48"
+                  :color="getIconColor(name)"
+                />
+                <span
+                  style="
+                    margin-top: 4px;
+                    font-size: 12px;
+                    color: #606266;
+                  "
+                >
+                  {{ name }}
+                </span>
+              </div>
+            </div>
+          </section>
+        </section>
 
         <section
           v-if="activeDemo === 'basic-container'"
@@ -347,7 +402,8 @@ import {
   FsNavBar,
   FsNavSide,
   FsCollapse,
-  FsCollapseItem
+  FsCollapseItem,
+  FsIcon
 } from '@freestyle/vue';
 import { ref } from 'vue';
 
@@ -356,4 +412,57 @@ const sizes = ['large', 'medium', 'small', 'mini'] as const;
 const activeDemo = ref('basic-button');
 const navTopActive = ref('home');
 const navSideActive = ref('dashboard');
+
+const iconGroups = [
+  {
+    key: 'direction',
+    title: '方向性（direction）',
+    icons: [
+      'arrowLeft',
+      'arrowRight',
+      'arrowUp',
+      'arrowDown',
+      'arrowUpDown',
+      'chevronLeft',
+      'chevronRight'
+    ]
+  },
+  {
+    key: 'feedback',
+    title: '状态 / 提示（feedback）',
+    icons: ['info', 'success', 'warning', 'error', 'question']
+  },
+  {
+    key: 'edit',
+    title: '编辑操作（edit）',
+    icons: ['plus', 'minus', 'edit', 'delete', 'copy']
+  },
+  {
+    key: 'data',
+    title: '数据 / 图表（data）',
+    icons: ['chartBar', 'chartLine', 'chartPie', 'trendUp', 'trendDown']
+  },
+  {
+    key: 'common',
+    title: '通用（common）',
+    icons: ['home', 'search', 'settings', 'user', 'refresh', 'close']
+  }
+] as const;
+
+function getIconColor(name: string): string | undefined {
+  switch (name) {
+    case 'success':
+      return '#67c23a';
+    case 'warning':
+      return '#e6a23c';
+    case 'error':
+      return '#f56c6c';
+    case 'info':
+      return '#409eff';
+    case 'question':
+      return '#909399';
+    default:
+      return undefined;
+  }
+}
 </script>

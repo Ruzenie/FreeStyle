@@ -14,7 +14,8 @@ import {
   FsNavBar,
   FsNavSide,
   FsCollapse,
-  FsCollapseItem
+  FsCollapseItem,
+  FsIcon
 } from '@freestyle/react';
 import './index.css';
 
@@ -36,6 +37,65 @@ const sizes: Array<Parameters<typeof FsButton>[0]['size']> = [
   'mini'
 ];
 
+type IconName = Parameters<typeof FsIcon>[0]['name'];
+
+const iconGroups: Array<{
+  key: string;
+  title: string;
+  icons: IconName[];
+}> = [
+  {
+    key: 'direction',
+    title: '方向性（direction）',
+    icons: [
+      'arrowLeft',
+      'arrowRight',
+      'arrowUp',
+      'arrowDown',
+      'arrowUpDown',
+      'chevronLeft',
+      'chevronRight'
+    ]
+  },
+  {
+    key: 'feedback',
+    title: '状态 / 提示（feedback）',
+    icons: ['info', 'success', 'warning', 'error', 'question']
+  },
+  {
+    key: 'edit',
+    title: '编辑操作（edit）',
+    icons: ['plus', 'minus', 'edit', 'delete', 'copy']
+  },
+  {
+    key: 'data',
+    title: '数据 / 图表（data）',
+    icons: ['chartBar', 'chartLine', 'chartPie', 'trendUp', 'trendDown']
+  },
+  {
+    key: 'common',
+    title: '通用（common）',
+    icons: ['home', 'search', 'settings', 'user', 'refresh', 'close']
+  }
+];
+
+function getIconColor(name: IconName): string | undefined {
+  switch (name) {
+    case 'success':
+      return '#67c23a';
+    case 'warning':
+      return '#e6a23c';
+    case 'error':
+      return '#f56c6c';
+    case 'info':
+      return '#409eff';
+    case 'question':
+      return '#909399';
+    default:
+      return undefined;
+  }
+}
+
 type MenuNode = {
   key: string;
   title: string;
@@ -47,7 +107,10 @@ const demoMenuTree: MenuNode[] = [
   {
     key: 'basic',
     title: 'basic',
-    children: [{ key: 'basic-button', title: 'button' }]
+    children: [
+      { key: 'basic-button', title: 'button' },
+      { key: 'basic-icon', title: 'icon' }
+    ]
   },
   {
     key: 'layout',
@@ -253,6 +316,56 @@ function App() {
                 </FsButton>
               </section>
             </>
+          )}
+
+          {activeDemo === 'basic-icon' && (
+            <section style={{ marginTop: 16 }}>
+              <h2>图标组件（FsIcon）</h2>
+              <p>使用 FsIcon 渲染不同分类下的线框图标。</p>
+              {iconGroups.map((group) => (
+                <section
+                  key={group.key}
+                  style={{ marginTop: 16 }}
+                >
+                  <h3 style={{ marginBottom: 8 }}>{group.title}</h3>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: 16,
+                      marginTop: 4
+                    }}
+                  >
+                    {group.icons.map((name) => (
+                      <div
+                        key={name}
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          width: 80
+                        }}
+                      >
+                        <FsIcon
+                          name={name}
+                          size={48}
+                          color={getIconColor(name)}
+                        />
+                        <span
+                          style={{
+                            marginTop: 4,
+                            fontSize: 12,
+                            color: '#606266'
+                          }}
+                        >
+                          {name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </section>
           )}
 
           {activeDemo === 'basic-container' && (

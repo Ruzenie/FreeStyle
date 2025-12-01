@@ -9,6 +9,7 @@ export default {
     ...(Array.isArray(baseConfig.external) ? baseConfig.external : []),
     'react',
     'react-dom',
-    '@freestyle/core'
+    '@freestyle/core',
+    '@freestyle/icons'
   ]
 };

@@ -1,7 +1,7 @@
 {
-  "name": "@freestyle/vue",
+  "name": "@freestyle/icons",
   "version": "0.1.0",
-  "description": "Vue bindings for FreeStyle UI component library.",
+  "description": "Icon definitions and utilities for the FreeStyle UI component library.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -9,24 +9,17 @@
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
     "clean": "rimraf dist",
-    "lint": "eslint \"src/**/*.{ts,tsx,vue}\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "test": "vitest"
   },
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "@freestyle/core": "workspace:*",
-    "@freestyle/icons": "workspace:*"
-  },
-  "peerDependencies": {
-    "vue": "^3.3.0"
-  },
   "keywords": [
     "ui",
-    "vue",
-    "components",
+    "icons",
     "freestyle"
   ],
   "license": "MIT"
 }
+
