@@ -5,7 +5,7 @@ export default {
   external: [
     ...(Array.isArray(baseConfig.external) ? baseConfig.external : []),
     'vue',
-    '@freestyle/core'
+    '@freestyle/core',
+    '@freestyle/icons'
   ]
 };
-

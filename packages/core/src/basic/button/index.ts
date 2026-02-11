@@ -161,7 +161,7 @@ export function createButtonStyles(
     style.opacity = 0.7;
   }
 
-  // Hover / active visual feedback (skip when loading).
+  // Hover / active visual feedback
   if (!disabled && !loading) {
      // For simplicity, tweak opacity and shadow rather than doing full color math.
      if (hovered) {
